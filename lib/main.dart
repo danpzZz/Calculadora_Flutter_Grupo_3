@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Presentacion/Screens/calculadora.dart';
-
+import 'Presentacion/Screens/calculadoraKevin.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Calculadora(),
+      home: calculadoraKevin(),
     );
   }
 }

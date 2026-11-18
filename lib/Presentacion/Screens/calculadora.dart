@@ -16,48 +16,98 @@ class Calculadora extends StatefulWidget {
 }
 
 class _CalculadoraState extends State<Calculadora> {
-  int numero1 = 0;
-  int numero2 = 25;
+  int contadorClicsSuma = 0;
+  int contadorClicsResta = 25;
+  int total = 0;
+
+  // Método para incrementar
+  void incrementar() {
+    setState(() {
+      contadorClicsSuma++;
+    });
+  }
+
+  // Método para decrementar
+  void decrementar() {
+    setState(() {
+      contadorClicsResta--;
+    });
+  }
+
+  // Método para calcular el total
+  void calcularTotal() {
+    setState(() {
+      total = contadorClicsSuma - contadorClicsResta;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Calculadora de Daniel"),
-        centerTitle: true,
+        title: const Text('Calculadora'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
       ),
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Sumar +"),
-            Text("$numero1"),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  numero1++;
-                });
-              },
-              child: const Text("+"),
+
+            // Contador de suma
+            const Text(
+              'Número de clicks +',
+              style: TextStyle(fontSize: 20),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
-            const Text("Restar -"),
-            Text("$numero2"),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  numero2--;
-                });
-              },
-              child: const Text("-"),
+            Text(
+              '$contadorClicsSuma',
+              style: const TextStyle(fontSize: 30),
             ),
 
-            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: incrementar,
+              child: const Text('+'),
+            ),
 
-            const Text("Total"),
-            Text("${numero1 - numero2}"),
+            const SizedBox(height: 20),
+
+            // Contador de resta
+            const Text(
+              'Número de clicks -',
+              style: TextStyle(fontSize: 20),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              '$contadorClicsResta',
+              style: const TextStyle(fontSize: 30),
+            ),
+
+            ElevatedButton(
+              onPressed: decrementar,
+              child: const Text('-'),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Botón para calcular total
+            ElevatedButton(
+              onPressed: calcularTotal,
+              child: const Text('Total'),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Mostrar total
+            Text(
+              '$total',
+              style: const TextStyle(fontSize: 30),
+            ),
           ],
         ),
       ),

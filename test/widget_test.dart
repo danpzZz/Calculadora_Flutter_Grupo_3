@@ -1,30 +1,74 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Pruebas de la Calculadora de clicks de Camila Vivas.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:flutter_application_1/main.dart';
 
+Future<void> tocar(WidgetTester tester, String boton, {int veces = 1}) async {
+  for (var i = 0; i < veces; i++) {
+    await tester.tap(find.text(boton));
+    await tester.pump();
+  }
+  await tester.pumpAndSettle();
+}
+
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Empieza con clicks + en 0 y clicks - en 25', (tester) async {
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
+    expect(find.text('Camila Vivas ❤️'), findsOneWidget);
     expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('25'), findsOneWidget);
+    expect(find.text('Pulsa = para calcular'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('El total puede dar negativo', (tester) async {
+    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    await tocar(tester, '+', veces: 3);
+    await tocar(tester, '=');
+
+    expect(find.text('-22'), findsOneWidget);
+    expect(find.text('3 − 25 = -22 (negativo)'), findsOneWidget);
+  });
+
+  testWidgets('El total puede dar positivo', (tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tocar(tester, '+', veces: 30);
+    await tocar(tester, '-', veces: 2);
+    await tocar(tester, '=');
+
+    expect(find.text('3'), findsOneWidget);
+    expect(find.text('30 − 27 = 3 (positivo)'), findsOneWidget);
+  });
+
+  testWidgets('Avisa cuando el total quedó desactualizado', (tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tocar(tester, '=');
+    await tocar(tester, '+');
+
+    expect(
+      find.text('Los clicks cambiaron, pulsa = otra vez'),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('Reiniciar vuelve a 0 y 25, y se puede deshacer', (tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    await tocar(tester, '+', veces: 4);
+    await tester.tap(find.byIcon(Icons.refresh));
+    await tester.pumpAndSettle();
+
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('25'), findsOneWidget);
+
+    await tester.tap(find.text('Deshacer'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('4'), findsOneWidget);
   });
 }

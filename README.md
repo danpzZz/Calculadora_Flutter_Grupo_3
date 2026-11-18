@@ -1,17 +1,39 @@
-# flutter_application_1
+# Calculadora de clicks — Camila Vivas ❤️
 
-A new Flutter project.
+Trabajo de clase de Flutter (Programación V, Grupo 3).
 
-## Getting Started
+## ¿Qué hace?
 
-This project is a starting point for a Flutter application.
+| Sección | Valor inicial | Botón |
+|---|---|---|
+| Numero de clicks + | 0 | **+** suma 1 |
+| Numero de clicks - | 25 | **-** suma 1 |
+| Total | — | **=** calcula `clicks + − clicks -` |
 
-A few resources to get you started if this is your first Flutter project:
+El total puede dar **positivo** (verde) o **negativo** (rojo).
+Ejemplo: 3 clicks en + → `3 − 25 = -22`; 30 clicks en + y 2 en - → `30 − 27 = 3`.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Extras
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Aviso cuando los clicks cambian después de pulsar **=**.
+- Botón para reiniciar (vuelve a 0 y 25) con opción de **Deshacer**.
+- Diseño en colores pastel con animación en los números.
+
+## Cómo ejecutarlo
+
+```
+flutter pub get
+flutter run
+```
+
+Pruebas:
+
+```
+flutter test
+```
+
+## Archivos principales
+
+- `lib/main.dart` — arranca la app.
+- `lib/Presentacion/Screens/pantalla.dart` — la calculadora.
+- `test/widget_test.dart` — pruebas de la calculadora.
